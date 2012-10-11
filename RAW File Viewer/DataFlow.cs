@@ -156,7 +156,7 @@ namespace RAW_File_Viewer
 
             IDTSCustomProperty100 _property = _objIDTSDSTReaderMetaData.CustomPropertyCollection.New();
             _property.Name = "DataReader";
-            _property.Value = new object();;
+            _property.Value = new object();
 
             _property = _objIDTSDSTReaderMetaData.CustomPropertyCollection.New();
             _property.Name = "FailOnTimeout";
