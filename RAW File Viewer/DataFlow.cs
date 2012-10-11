@@ -49,15 +49,12 @@ namespace RAW_File_Viewer
         private Microsoft.SqlServer.Dts.Runtime.Wrapper.IDTSVariable100 _dataVariable = null;
         private StringBuilder _strRAWColNames = new StringBuilder();
         private char _delim = ',';
-        private DataRow _drRAWData = null;
-        private string _strValue = null;
         private int _iDestInputID = 0;
         private string _strIndex = string.Empty;
         private int _iIndex = 0;
         private IDTSInput100 _objIDTSInput = null;
         private IDTSVirtualInput100 _objIDTSVirtualInput = null;
         private string[] _strFilterArray = null;
-        private int _iRowCount = 1;
 
     #endregion
     #region Constructor
