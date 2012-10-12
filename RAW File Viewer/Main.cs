@@ -30,7 +30,7 @@ namespace RAW_File_Viewer
         {
             OpenFileDialog fDialog = new OpenFileDialog();
             fDialog.Title = "Open RAW File";
-            fDialog.Filter = "RAW Files|*.RAW";
+            fDialog.Filter = "RAW Files|*.RAW|All Files|*.*";
             if (fDialog.ShowDialog() == DialogResult.OK)
             {
                 BindDataGridView(fDialog.FileName.ToString());
@@ -40,31 +40,38 @@ namespace RAW_File_Viewer
         // Loads RAWData to DataGridView
         internal void BindDataGridView(string strRawFileName)
         {
-            _objDataFlow = new clsDataFlow();
-            _objDataFlow.strRAWFileName = strRawFileName;
-            // Creates Package for DataFlow
-            _objDataFlow.CreatePackage();
-            // Creates Source Component - DataFlow
-            _objDataFlow.CreateSourceComponent(_objDataFlow.strRAWFileName);
-
-            // Creates Destination Component - DataFlow
-            _objDataFlow.CreateDestinationReaderComponent();
-            String strPath = _objDataFlow.SavePackage();
-
-            DataSet dsGridView = GetGridViewData(strPath);
-
-            if (dsGridView != null)
+            try
             {
-                dgvMain.Enabled = true;
-                dgvMain.DataSource = dsGridView;
-                dgvMain.DataMember = dsGridView.Tables[0].TableName;
-                // Set tooltip for header to be the column's data type
-                foreach (DataGridViewColumn dgvColumn in dgvMain.Columns)
+                _objDataFlow = new clsDataFlow();
+                _objDataFlow.strRAWFileName = strRawFileName;
+                // Creates Package for DataFlow
+                _objDataFlow.CreatePackage();
+                // Creates Source Component - DataFlow
+                _objDataFlow.CreateSourceComponent(_objDataFlow.strRAWFileName);
+
+                // Creates Destination Component - DataFlow
+                _objDataFlow.CreateDestinationReaderComponent();
+                String strPath = _objDataFlow.SavePackage();
+
+                DataSet dsGridView = GetGridViewData(strPath);
+
+                if (dsGridView != null)
                 {
-                    dgvColumn.HeaderCell.ToolTipText = dsGridView.Tables[0].Columns[dgvColumn.Index].DataType.ToString();
+                    dgvMain.Enabled = true;
+                    dgvMain.DataSource = dsGridView;
+                    dgvMain.DataMember = dsGridView.Tables[0].TableName;
+                    // Set tooltip for header to be the column's data type
+                    foreach (DataGridViewColumn dgvColumn in dgvMain.Columns)
+                    {
+                        dgvColumn.HeaderCell.ToolTipText = dsGridView.Tables[0].Columns[dgvColumn.Index].DataType.ToString();
+                    }
                 }
+                File.Delete(strPath);
             }
-            File.Delete(strPath);
+            catch (Exception e)
+            {
+                MessageBox.Show("Error processing file. Selected file may be wrong type or corrupted.");
+            }
             GC.Collect();
         }
 
