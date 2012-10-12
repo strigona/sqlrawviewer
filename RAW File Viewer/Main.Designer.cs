@@ -84,7 +84,7 @@
             this.Controls.Add(this.dgvMain);
             this.Menu = this.mainMenu1;
             this.Name = "frmMain";
-            this.Text = "Raw File Viewer - 2008";
+            this.Text = "RAW File Viewer - 2008";
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.ResumeLayout(false);
 
