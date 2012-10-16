@@ -16,9 +16,13 @@ namespace RAW_File_Viewer
     {
         clsDataFlow _objDataFlow = new clsDataFlow();
 
-        public frmMain()
+        public frmMain(string[] args)
         {
             InitializeComponent();
+            if (args.Length != 0)
+            {
+                BindDataGridView(args[0]);
+            }
         }
 
         private void menuItemExit_Click(object sender, EventArgs e)
