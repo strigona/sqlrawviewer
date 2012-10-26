@@ -15,13 +15,14 @@ namespace RAW_File_Viewer
     public partial class frmMain : Form
     {
         clsDataFlow _objDataFlow = new clsDataFlow();
-
+        internal string _strWindowTitle;
         public frmMain(string[] args)
         {
             InitializeComponent();
+            _strWindowTitle = this.Text;
             if (args.Length != 0)
             {
-                BindDataGridView(args[0]);
+                OpenFile(args[0]);
             }
         }
 
@@ -37,12 +38,17 @@ namespace RAW_File_Viewer
             fDialog.Filter = "RAW Files|*.RAW|All Files|*.*";
             if (fDialog.ShowDialog() == DialogResult.OK)
             {
-                BindDataGridView(fDialog.FileName.ToString());
+                OpenFile(fDialog.FileName.ToString());
             }
         }
 
+        private void menuItemClose_Click(object sender, EventArgs e)
+        {
+            CloseFile();
+        }
+
         // Loads RAWData to DataGridView
-        internal void BindDataGridView(string strRawFileName)
+        internal void OpenFile(string strRawFileName)
         {
             try
             {
@@ -71,11 +77,26 @@ namespace RAW_File_Viewer
                     }
                 }
                 File.Delete(strPath);
+                // Set titlebar
+                this.Text = String.Format("{0} - {1} (in {2})",
+                    _strWindowTitle,
+                    System.IO.Path.GetFileName(strRawFileName),
+                    System.IO.Path.GetDirectoryName(strRawFileName));
+                menuItemClose.Enabled = true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                MessageBox.Show("Error processing file. Selected file may be wrong type or corrupted.");
+                MessageBox.Show("Error opening file. Selected file may be wrong type or corrupted.");
+                CloseFile();
             }
+        }
+
+        internal void CloseFile()
+        {
+            dgvMain.DataSource = null;
+            menuItemClose.Enabled = false;
+            this.Text = String.Format("{0}", _strWindowTitle);
+
             GC.Collect();
         }
 
@@ -118,6 +139,7 @@ namespace RAW_File_Viewer
             }
             return dsPackageData;
         }
+
 
     }
 

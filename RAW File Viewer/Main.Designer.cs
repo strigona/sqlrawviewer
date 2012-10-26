@@ -31,10 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.dgvMain = new System.Windows.Forms.DataGridView();
-            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
+            this.menuItemFileMenu = new System.Windows.Forms.MenuItem();
             this.menuItemOpen = new System.Windows.Forms.MenuItem();
             this.menuItemExit = new System.Windows.Forms.MenuItem();
+            this.menuItemClose = new System.Windows.Forms.MenuItem();
+            this.menuItemSeparator = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,18 +54,20 @@
             this.dgvMain.Size = new System.Drawing.Size(362, 330);
             this.dgvMain.TabIndex = 1;
             // 
-            // mainMenu1
+            // mainMenu
             // 
-            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem1});
+            this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemFileMenu});
             // 
-            // menuItem1
+            // menuItemFileMenu
             // 
-            this.menuItem1.Index = 0;
-            this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemFileMenu.Index = 0;
+            this.menuItemFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemOpen,
+            this.menuItemClose,
+            this.menuItemSeparator,
             this.menuItemExit});
-            this.menuItem1.Text = "File";
+            this.menuItemFileMenu.Text = "File";
             // 
             // menuItemOpen
             // 
@@ -73,9 +77,21 @@
             // 
             // menuItemExit
             // 
-            this.menuItemExit.Index = 1;
+            this.menuItemExit.Index = 3;
             this.menuItemExit.Text = "Exit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
+            // 
+            // menuItemClose
+            // 
+            this.menuItemClose.Enabled = false;
+            this.menuItemClose.Index = 1;
+            this.menuItemClose.Text = "Close";
+            this.menuItemClose.Click += new System.EventHandler(this.menuItemClose_Click);
+            // 
+            // menuItemSeparator
+            // 
+            this.menuItemSeparator.Index = 2;
+            this.menuItemSeparator.Text = "-";
             // 
             // frmMain
             // 
@@ -84,9 +100,9 @@
             this.ClientSize = new System.Drawing.Size(362, 330);
             this.Controls.Add(this.dgvMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Menu = this.mainMenu1;
+            this.Menu = this.mainMenu;
             this.Name = "frmMain";
-            this.Text = "RAW File Viewer - 2008";
+            this.Text = "RAW File Viewer 2008 R2";
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.ResumeLayout(false);
 
@@ -95,10 +111,12 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvMain;
-        private System.Windows.Forms.MainMenu mainMenu1;
-        private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.MainMenu mainMenu;
+        private System.Windows.Forms.MenuItem menuItemFileMenu;
         private System.Windows.Forms.MenuItem menuItemOpen;
         private System.Windows.Forms.MenuItem menuItemExit;
+        private System.Windows.Forms.MenuItem menuItemClose;
+        private System.Windows.Forms.MenuItem menuItemSeparator;
     }
 }
 
