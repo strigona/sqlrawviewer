@@ -34,9 +34,9 @@
             this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.menuItemFileMenu = new System.Windows.Forms.MenuItem();
             this.menuItemOpen = new System.Windows.Forms.MenuItem();
-            this.menuItemExit = new System.Windows.Forms.MenuItem();
             this.menuItemClose = new System.Windows.Forms.MenuItem();
             this.menuItemSeparator = new System.Windows.Forms.MenuItem();
+            this.menuItemExit = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,31 +67,32 @@
             this.menuItemClose,
             this.menuItemSeparator,
             this.menuItemExit});
-            this.menuItemFileMenu.Text = "File";
+            this.menuItemFileMenu.Text = "&File";
             // 
             // menuItemOpen
             // 
             this.menuItemOpen.Index = 0;
-            this.menuItemOpen.Text = "Open";
+            this.menuItemOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
+            this.menuItemOpen.Text = "&Open";
             this.menuItemOpen.Click += new System.EventHandler(this.menuItemOpen_Click);
-            // 
-            // menuItemExit
-            // 
-            this.menuItemExit.Index = 3;
-            this.menuItemExit.Text = "Exit";
-            this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
             // menuItemClose
             // 
             this.menuItemClose.Enabled = false;
             this.menuItemClose.Index = 1;
-            this.menuItemClose.Text = "Close";
+            this.menuItemClose.Text = "&Close";
             this.menuItemClose.Click += new System.EventHandler(this.menuItemClose_Click);
             // 
             // menuItemSeparator
             // 
             this.menuItemSeparator.Index = 2;
             this.menuItemSeparator.Text = "-";
+            // 
+            // menuItemExit
+            // 
+            this.menuItemExit.Index = 3;
+            this.menuItemExit.Text = "E&xit";
+            this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
             // frmMain
             // 
