@@ -34,6 +34,18 @@ namespace RAW_File_Viewer
         }
 
         #region Events
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                if (this._bFileOpen)
+                {
+                    SearchText(toolStripTextFind.Text);
+                }
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
@@ -107,7 +119,6 @@ namespace RAW_File_Viewer
                     bFirstSearch = true;
                     iStartRowIndex = dgvMain.CurrentCell.RowIndex;
                     iStartColumnIndex = dgvMain.CurrentCell.ColumnIndex;
-                    Console.WriteLine("Reseting search members");
                 }
                 else
                 {
