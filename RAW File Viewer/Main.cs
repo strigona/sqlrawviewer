@@ -16,6 +16,13 @@ namespace RAW_File_Viewer
     {
         clsDataFlow _objDataFlow = new clsDataFlow();
         internal string _strWindowTitle;
+        bool _bFileOpen = false;
+        #region Search Members
+        DataGridViewCell _dgcPreviousSearchCell = null;
+        String _strPreviousSearch = "";
+        int _iStartRowIndex = 0;
+        int _iStartColumnIndex = 0;
+        #endregion
         public frmMain(string[] args)
         {
             InitializeComponent();
@@ -26,12 +33,44 @@ namespace RAW_File_Viewer
             }
         }
 
+        #region Events
+
         private void menuItemExit_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
         }
 
+        private void toolStripButtonOpen_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog();
+        }
+
         private void menuItemOpen_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog();
+        }
+
+        private void menuItemClose_Click(object sender, EventArgs e)
+        {
+            CloseFile();
+        }
+
+        private void toolStripTextFind_CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter)
+            {
+                SearchText(toolStripTextFind.Text);
+                e.Handled = true;
+            }
+        }
+
+        private void toolStripButtonFind_Click(object sender, EventArgs e)
+        {
+            SearchText(toolStripTextFind.Text);
+        }
+        #endregion
+
+        internal void OpenFileDialog()
         {
             OpenFileDialog fDialog = new OpenFileDialog();
             fDialog.Title = "Open RAW File";
@@ -42,9 +81,118 @@ namespace RAW_File_Viewer
             }
         }
 
-        private void menuItemClose_Click(object sender, EventArgs e)
+        internal bool SearchText(string strSearchText)
         {
-            CloseFile();
+            DataGridViewCell dgvcSearchCell = null;
+            if (this._bFileOpen && strSearchText != "" && dgvMain.CurrentCell != null)
+            {
+                bool bFirstSearch;
+                int iStartRowIndex = dgvMain.CurrentCell.RowIndex;
+                int iStartColumnIndex = dgvMain.CurrentCell.ColumnIndex;
+                // Clear highlighted cell
+                if (this._dgcPreviousSearchCell != null)
+                {
+                    iStartRowIndex = this._dgcPreviousSearchCell.RowIndex;
+                    iStartColumnIndex = this._dgcPreviousSearchCell.ColumnIndex;
+                    this._dgcPreviousSearchCell.Style.BackColor = Color.Empty;
+                    this._dgcPreviousSearchCell = null;
+                }
+
+                if (!this._strPreviousSearch.Equals(strSearchText))
+                {
+                    // Reset search start position if new search string
+                    this._strPreviousSearch = strSearchText;
+                    this._iStartRowIndex = dgvMain.CurrentCell.RowIndex;
+                    this._iStartColumnIndex = dgvMain.CurrentCell.ColumnIndex;
+                    bFirstSearch = true;
+                    iStartRowIndex = dgvMain.CurrentCell.RowIndex;
+                    iStartColumnIndex = dgvMain.CurrentCell.ColumnIndex;
+                    Console.WriteLine("Reseting search members");
+                }
+                else
+                {
+                    // Otherwise move passed current cell
+                    bFirstSearch = false;
+                    iStartRowIndex = dgvMain.CurrentCell.RowIndex;
+                    iStartColumnIndex = (dgvMain.CurrentCell.ColumnIndex + 1) % dgvMain.Columns.Count;
+                    if (iStartColumnIndex == 0)
+                    {
+                        iStartRowIndex = (dgvMain.CurrentCell.RowIndex + 1) % dgvMain.Rows.Count;
+                    }
+                }
+                // Search the remainder of the columns in the current row
+                for (int iColumnIndex = iStartColumnIndex; iColumnIndex < dgvMain.Rows[iStartRowIndex].Cells.Count; iColumnIndex++)
+                {
+                    if (_iStartRowIndex == iStartRowIndex && _iStartColumnIndex == iColumnIndex && !bFirstSearch)
+                    {
+                        // Searched the whole grid
+                        MessageBox.Show("Finished searching this file");
+                        _strPreviousSearch = "";
+                        return false;
+                    }
+                    dgvcSearchCell = dgvMain.Rows[iStartRowIndex].Cells[iColumnIndex];
+                    if (dgvcSearchCell.Value.ToString().Contains(strSearchText))
+                    {
+                        dgvcSearchCell.Style.BackColor = Color.Yellow;
+                        dgvMain.CurrentCell = dgvcSearchCell;
+                        this._dgcPreviousSearchCell = dgvcSearchCell;
+                        return true;
+                    }
+                }
+                // Search all rows except for the start row
+                for (int iRowIndex = (iStartRowIndex + 1) % dgvMain.Rows.Count; iRowIndex != this._iStartRowIndex; iRowIndex = (iRowIndex + 1) % dgvMain.Rows.Count)
+                {
+                    for (int iColumnIndex = 0; iColumnIndex < dgvMain.Rows[iRowIndex].Cells.Count; iColumnIndex++)
+                    {
+                        dgvcSearchCell = dgvMain.Rows[iRowIndex].Cells[iColumnIndex];
+                        if (dgvcSearchCell.Value.ToString().Contains(strSearchText))
+                        {
+                            dgvcSearchCell.Style.BackColor = Color.Yellow;
+                            dgvMain.CurrentCell = dgvcSearchCell;
+                            this._dgcPreviousSearchCell = dgvcSearchCell;
+                            return true;
+                        }
+                    }
+                }
+                // Search the beginning columns on the start row
+                for (int iColumnIndex = 0; iColumnIndex < _iStartColumnIndex; iColumnIndex++)
+                {
+                    dgvcSearchCell = dgvMain.Rows[_iStartRowIndex].Cells[iColumnIndex];
+                    if (dgvcSearchCell.Value.ToString().Contains(strSearchText))
+                    {
+                      dgvcSearchCell.Style.BackColor = Color.Yellow;
+                        dgvMain.CurrentCell = dgvcSearchCell;
+                        this._dgcPreviousSearchCell = dgvcSearchCell;
+                        return true;
+                    }
+                }
+                // Text isn't in the file or we've found every occurrence, clear _strPreviousSearch
+                // so next search will start from scratch
+                _strPreviousSearch = "";
+                if (bFirstSearch)
+                {
+                    // If it isn't found on the first search through the document it doesn't exist at all
+                    MessageBox.Show("Text not found in the document");
+                }
+                else
+                {
+                    // We found something on a previous search
+                    MessageBox.Show("Finished searching this file");
+                }
+            }
+
+            return false;
+        }
+
+        internal void CloseFile()
+        {
+            dgvMain.DataSource = null;
+            menuItemClose.Enabled = false;
+            toolStripButtonFind.Enabled = false;
+            toolStripTextFind.Enabled = false;
+            this.Text = String.Format("{0}", _strWindowTitle);
+            this._bFileOpen = false;
+            GC.Collect();
         }
 
         // Loads RAWData to DataGridView
@@ -83,21 +231,15 @@ namespace RAW_File_Viewer
                     System.IO.Path.GetFileName(strRawFileName),
                     System.IO.Path.GetDirectoryName(strRawFileName));
                 menuItemClose.Enabled = true;
+                toolStripButtonFind.Enabled = true;
+                toolStripTextFind.Enabled = true;
+                this._bFileOpen = true;
             }
             catch (Exception)
             {
                 MessageBox.Show("Error opening file. Selected file may be wrong type or corrupted.");
                 CloseFile();
             }
-        }
-
-        internal void CloseFile()
-        {
-            dgvMain.DataSource = null;
-            menuItemClose.Enabled = false;
-            this.Text = String.Format("{0}", _strWindowTitle);
-
-            GC.Collect();
         }
 
         internal DataSet GetGridViewData(string strPath)
@@ -139,8 +281,6 @@ namespace RAW_File_Viewer
             }
             return dsPackageData;
         }
-
-
     }
 
 }
