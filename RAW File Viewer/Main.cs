@@ -229,10 +229,13 @@ namespace RAW_File_Viewer
                     dgvMain.Enabled = true;
                     dgvMain.DataSource = dsGridView;
                     dgvMain.DataMember = dsGridView.Tables[0].TableName;
+
                     // Set tooltip for header to be the column's data type
+                    //  and set default width to column header width
                     foreach (DataGridViewColumn dgvColumn in dgvMain.Columns)
                     {
                         dgvColumn.HeaderCell.ToolTipText = dsGridView.Tables[0].Columns[dgvColumn.Index].DataType.ToString();
+                        dgvColumn.Width = dgvColumn.HeaderCell.PreferredSize.Width;
                     }
                 }
                 File.Delete(strPath);
