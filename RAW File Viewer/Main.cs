@@ -42,7 +42,7 @@ namespace RAW_File_Viewer
             {
                 if (this._bFileOpen)
                 {
-                    SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedText));
+                    SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedItem.ToString()));
                 }
                 return true;
             }
@@ -97,14 +97,14 @@ namespace RAW_File_Viewer
         {
             if (e.KeyChar == (char) Keys.Enter)
             {
-                SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedText));
+                SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedItem.ToString()));
                 e.Handled = true;
             }
         }
 
         private void toolStripButtonFind_Click(object sender, EventArgs e)
         {
-            SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedText));
+            SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedItem.ToString()));
         }
         #endregion
 
