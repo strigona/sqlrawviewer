@@ -42,6 +42,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextFind = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripComboSearchBy = new System.Windows.Forms.ToolStripComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.toolStrip.SuspendLayout();
@@ -110,7 +111,8 @@
             this.toolStripButtonOpen,
             this.toolStripSeparator1,
             this.toolStripButtonFind,
-            this.toolStripTextFind});
+            this.toolStripTextFind,
+            this.toolStripComboSearchBy});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(362, 25);
@@ -151,6 +153,13 @@
             this.toolStripTextFind.Size = new System.Drawing.Size(100, 25);
             this.toolStripTextFind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextFind_CheckEnter);
             // 
+            // toolStripComboSearchBy
+            // 
+            this.toolStripComboSearchBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboSearchBy.Name = "toolStripComboSearchBy";
+            this.toolStripComboSearchBy.Size = new System.Drawing.Size(110, 25);
+            this.toolStripComboSearchBy.SelectedIndexChanged += new System.EventHandler(this.toolStripComboSearchBy_SelectedIndexChanged);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.dgvMain);
@@ -171,7 +180,9 @@
             this.Menu = this.mainMenu;
             this.Name = "frmMain";
             this.Text = "RAW File Viewer 2008 R2";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.Click += new System.EventHandler(this.toolStripButtonFind_Click);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
@@ -196,6 +207,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonFind;
         private System.Windows.Forms.ToolStripTextBox toolStripTextFind;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboSearchBy;
     }
 }
 
