@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.dgvMain = new System.Windows.Forms.DataGridView();
             this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.menuItemFileMenu = new System.Windows.Forms.MenuItem();
             this.menuItemOpen = new System.Windows.Forms.MenuItem();
@@ -43,26 +42,15 @@
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextFind = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripComboSearchBy = new System.Windows.Forms.ToolStripComboBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelFileStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
+            this.dgvMain = new System.Windows.Forms.DataGridView();
             this.toolStrip.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dgvMain
-            // 
-            this.dgvMain.AllowUserToAddRows = false;
-            this.dgvMain.AllowUserToDeleteRows = false;
-            this.dgvMain.AllowUserToOrderColumns = true;
-            this.dgvMain.AllowUserToResizeRows = false;
-            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMain.Location = new System.Drawing.Point(0, 0);
-            this.dgvMain.Name = "dgvMain";
-            this.dgvMain.ReadOnly = true;
-            this.dgvMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvMain.Size = new System.Drawing.Size(362, 305);
-            this.dgvMain.TabIndex = 1;
             // 
             // mainMenu
             // 
@@ -160,14 +148,40 @@
             this.toolStripComboSearchBy.Size = new System.Drawing.Size(110, 25);
             this.toolStripComboSearchBy.SelectedIndexChanged += new System.EventHandler(this.toolStripComboSearchBy_SelectedIndexChanged);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelFileStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 308);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(362, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelFileStatus
+            // 
+            this.toolStripStatusLabelFileStatus.Name = "toolStripStatusLabelFileStatus";
+            this.toolStripStatusLabelFileStatus.Size = new System.Drawing.Size(0, 17);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.dgvMain);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(362, 305);
-            this.panel1.TabIndex = 3;
+            this.panel1.Size = new System.Drawing.Size(362, 283);
+            this.panel1.TabIndex = 4;
+            // 
+            // dgvMain
+            // 
+            this.dgvMain.AllowUserToAddRows = false;
+            this.dgvMain.AllowUserToDeleteRows = false;
+            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMain.Location = new System.Drawing.Point(0, 0);
+            this.dgvMain.Name = "dgvMain";
+            this.dgvMain.Size = new System.Drawing.Size(362, 283);
+            this.dgvMain.TabIndex = 1;
             // 
             // frmMain
             // 
@@ -175,6 +189,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(362, 330);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu;
@@ -183,10 +198,12 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Click += new System.EventHandler(this.toolStripButtonFind_Click);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,7 +211,6 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.MainMenu mainMenu;
         private System.Windows.Forms.MenuItem menuItemFileMenu;
         private System.Windows.Forms.MenuItem menuItemOpen;
@@ -202,12 +218,15 @@
         private System.Windows.Forms.MenuItem menuItemClose;
         private System.Windows.Forms.MenuItem menuItemSeparator;
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripButton toolStripButtonOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonFind;
         private System.Windows.Forms.ToolStripTextBox toolStripTextFind;
         private System.Windows.Forms.ToolStripComboBox toolStripComboSearchBy;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridView dgvMain;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFileStatus;
     }
 }
 

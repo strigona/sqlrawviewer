@@ -253,6 +253,7 @@ namespace RAW_File_Viewer
             toolStripButtonFind.Enabled = false;
             toolStripTextFind.Enabled = false;
             this.Text = String.Format("{0}", _strWindowTitle);
+            this.toolStripStatusLabelFileStatus.Text = "";
             this._bFileOpen = false;
             GC.Collect();
         }
@@ -274,27 +275,32 @@ namespace RAW_File_Viewer
                 String strPath = _objDataFlow.SavePackage();
 
                 DataSet dsGridView = GetGridViewData(strPath);
+                DataTable dtable = dsGridView.Tables[0];
 
                 if (dsGridView != null)
                 {
                     dgvMain.Enabled = true;
                     dgvMain.DataSource = dsGridView;
-                    dgvMain.DataMember = dsGridView.Tables[0].TableName;
+                    dgvMain.DataMember = dtable.TableName;
 
                     // Set tooltip for header to be the column's data type
                     //  and set default width to column header width
                     foreach (DataGridViewColumn dgvColumn in dgvMain.Columns)
                     {
-                        dgvColumn.HeaderCell.ToolTipText = dsGridView.Tables[0].Columns[dgvColumn.Index].DataType.ToString();
+                        dgvColumn.HeaderCell.ToolTipText = dtable.Columns[dgvColumn.Index].DataType.ToString();
                         dgvColumn.Width = dgvColumn.HeaderCell.PreferredSize.Width;
                     }
                 }
+
                 File.Delete(strPath);
                 // Set titlebar
                 this.Text = String.Format("{0} - {1} (in {2})",
                     _strWindowTitle,
                     System.IO.Path.GetFileName(strRawFileName),
                     System.IO.Path.GetDirectoryName(strRawFileName));
+                // Set statusbar
+                this.toolStripStatusLabelFileStatus.Text = String.Format("{0:n0} rows", dtable.Rows.Count);
+
                 menuItemClose.Enabled = true;
                 toolStripButtonFind.Enabled = true;
                 toolStripTextFind.Enabled = true;
