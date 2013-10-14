@@ -111,9 +111,8 @@ namespace RAW_File_Viewer
         #region Search
         internal bool SearchText(string strSearchText, SearchType searchType)
         {
-            Console.Out.WriteLine("Search: " + searchType);
             DataGridViewCell currentCell;
-            if (strSearchText.Equals(_strPreviousSearch))
+            if (strSearchText.Equals(_strPreviousSearch) && _dgvcPreviousSearchResultCell != null)
             {
                 // Continue searching after last search result
                 currentCell = getNextSearchCell(_dgvcPreviousSearchResultCell, searchType);
@@ -261,6 +260,7 @@ namespace RAW_File_Viewer
         // Loads RAWData to DataGridView
         internal void OpenFile(string strRawFileName)
         {
+            String strPath = "";
             try
             {
                 _objDataFlow = new clsDataFlow();
@@ -272,24 +272,25 @@ namespace RAW_File_Viewer
 
                 // Creates Destination Component - DataFlow
                 _objDataFlow.CreateDestinationReaderComponent();
-                String strPath = _objDataFlow.SavePackage();
+                strPath = _objDataFlow.SavePackage();
 
                 DataSet dsGridView = GetGridViewData(strPath);
+                if (dsGridView == null)
+                {
+                    throw new Exception();
+                }
                 DataTable dtable = dsGridView.Tables[0];
 
-                if (dsGridView != null)
-                {
-                    dgvMain.Enabled = true;
-                    dgvMain.DataSource = dsGridView;
-                    dgvMain.DataMember = dtable.TableName;
+                dgvMain.Enabled = true;
+                dgvMain.DataSource = dsGridView;
+                dgvMain.DataMember = dtable.TableName;
 
-                    // Set tooltip for header to be the column's data type
-                    //  and set default width to column header width
-                    foreach (DataGridViewColumn dgvColumn in dgvMain.Columns)
-                    {
-                        dgvColumn.HeaderCell.ToolTipText = dtable.Columns[dgvColumn.Index].DataType.ToString();
-                        dgvColumn.Width = dgvColumn.HeaderCell.PreferredSize.Width;
-                    }
+                // Set tooltip for header to be the column's data type
+                //  and set default width to column header width
+                foreach (DataGridViewColumn dgvColumn in dgvMain.Columns)
+                {
+                    dgvColumn.HeaderCell.ToolTipText = dtable.Columns[dgvColumn.Index].DataType.ToString();
+                    dgvColumn.Width = dgvColumn.HeaderCell.PreferredSize.Width;
                 }
 
                 File.Delete(strPath);
@@ -306,10 +307,15 @@ namespace RAW_File_Viewer
                 toolStripTextFind.Enabled = true;
                 this._bFileOpen = true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("Error opening file. Selected file may be wrong type or corrupted.");
+                MessageBox.Show("Error opening file. Selected file may be wrong type or corrupted." + Environment.NewLine + Environment.NewLine + e.ToString());
                 CloseFile();
+                try
+                {
+                    File.Delete(strPath);
+                }
+                catch {} // Tried and failed... oh well
             }
         }
         #endregion
