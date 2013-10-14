@@ -178,6 +178,7 @@
             this.dgvMain.AllowUserToDeleteRows = false;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMain.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvMain.Location = new System.Drawing.Point(0, 0);
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.Size = new System.Drawing.Size(362, 283);
