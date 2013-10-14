@@ -112,10 +112,15 @@ namespace RAW_File_Viewer
         internal bool SearchText(string strSearchText, SearchType searchType)
         {
             DataGridViewCell currentCell;
-            if (strSearchText.Equals(_strPreviousSearch) && _dgvcPreviousSearchResultCell != null)
+            if (strSearchText.Equals(_strPreviousSearch))
             {
                 // Continue searching after last search result
                 currentCell = getNextSearchCell(_dgvcPreviousSearchResultCell, searchType);
+                if (_dgvcStartCell.RowIndex == currentCell.RowIndex && _dgvcStartCell.ColumnIndex == currentCell.ColumnIndex)
+                {
+                    handleEndOfSearch(searchType);
+                    return false;
+                }
             }
             else
             {
@@ -130,9 +135,7 @@ namespace RAW_File_Viewer
                 currentCell = getNextSearchCell(currentCell, searchType);
                 if (_dgvcStartCell.RowIndex == currentCell.RowIndex && _dgvcStartCell.ColumnIndex == currentCell.ColumnIndex)
                 {
-                    displayEndOfSearchMessage(searchType, _dgvcPreviousSearchResultCell == null);
-                    clearCellHighlight(_dgvcPreviousSearchResultCell);
-                    _dgvcPreviousSearchResultCell = null;
+                    handleEndOfSearch(searchType);
                     return false;
                 }
             }
@@ -143,6 +146,14 @@ namespace RAW_File_Viewer
             dgvMain.CurrentCell = currentCell;
         
             return true;
+        }
+
+        internal void handleEndOfSearch(SearchType searchType)
+        {
+            displayEndOfSearchMessage(searchType, _dgvcPreviousSearchResultCell == null);
+            clearCellHighlight(_dgvcPreviousSearchResultCell);
+            _dgvcPreviousSearchResultCell = null;
+            _strPreviousSearch = "";
         }
 
         // Build and display end of search message
