@@ -37,7 +37,7 @@ namespace RAW_File_Viewer
         private CManagedComponentWrapper _objDestinationReaderWrapper;
 
         // Moniker & Constants
-        private const string _strDataFlowTaskMoniker = "SSIS.Pipeline.2";
+        private const string _strDataFlowTaskMoniker = "STOCK:PipelineTask";
 
         // DataFlow Component Id
         private const string _strSourceDFComponentID = "DTSAdapter.RawSource.2";
@@ -140,7 +140,7 @@ namespace RAW_File_Viewer
             _objSourceWrapper.ReleaseConnections();
         }
 
-        // Creates Destination Comonent (Input Collection)
+        // Creates Destination Component (Input Collection)
         internal void CreateDestinationReaderComponent()
         {
             // 1. DataReader String: the class name of the DataReader destination.
@@ -165,11 +165,6 @@ namespace RAW_File_Viewer
             _property = _objIDTSDSTReaderMetaData.CustomPropertyCollection.New();
             _property.Name = "ReadTimeout";
             _property.Value = 30000;
-
-            _property = _objIDTSDSTReaderMetaData.CustomPropertyCollection.New();
-            _property.Name = "UserComponentTypeName";
-            _property.Value = "Microsoft.SqlServer.Dts.Pipeline.DataReaderDestinationAdapter, Microsoft.SqlServer.DataReaderDest, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91";
-            // From: http://msdn.microsoft.com/en-us/library/microsoft.sqlserver.dts.runtime.application.pipelinecomponentinfos%28v=sql.100%29.aspx
 
             // Instantiates the Wrapper adding Destination Recordset Metadata
             _objDestinationReaderWrapper = _objIDTSDSTReaderMetaData.Instantiate();
