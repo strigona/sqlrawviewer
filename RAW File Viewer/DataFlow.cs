@@ -40,8 +40,8 @@ namespace RAW_File_Viewer
         private const string _strDataFlowTaskMoniker = "STOCK:PipelineTask";
 
         // DataFlow Component Id
-        private const string _strSourceDFComponentID = "DTSAdapter.RawSource.2";
-        private const string _strDestinationDFReaderComponentID = "Microsoft.SqlServer.Dts.Pipeline.DataReaderDestinationAdapter, Microsoft.SqlServer.DataReaderDest, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91";
+        private const string _strSourceDFComponentID = "DTSAdapter.RawSource.3";
+        private const string _strDestinationDFReaderComponentID = "Microsoft.SqlServer.Dts.Pipeline.DataReaderDestinationAdapter, Microsoft.SqlServer.DataReaderDest, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91";
 
         // Other Members
         private string _strRAWFileName = string.Empty;
