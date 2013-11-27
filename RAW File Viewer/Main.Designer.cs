@@ -197,7 +197,6 @@
             this.Name = "frmMain";
             this.Text = "RAW File Viewer 2008 R2";
             this.Load += new System.EventHandler(this.frmMain_Load);
-            this.Click += new System.EventHandler(this.toolStripButtonFind_Click);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();

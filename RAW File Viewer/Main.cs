@@ -42,7 +42,7 @@ namespace RAW_File_Viewer
             {
                 if (this._bFileOpen)
                 {
-                    SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedItem.ToString()));
+                    toolStripTextFind.Focus();
                 }
                 return true;
             }
@@ -111,6 +111,11 @@ namespace RAW_File_Viewer
         #region Search
         internal bool SearchText(string strSearchText, SearchType searchType)
         {
+            if (strSearchText.Equals(""))
+            {
+                return false;
+            }
+
             DataGridViewCell currentCell;
             if (strSearchText.Equals(_strPreviousSearch))
             {
