@@ -1,5 +1,4 @@
-﻿//*************************************************************************************************************************
-// Description: SSIS 2008 Package Programming to move data from the RAWFile to DataGridView
+﻿// Description: SSIS 2008 Package Programming to move data from the RAWFile to DataGridView
 //              using Data Reader as Destination
 // Created by:  Mitulkumar Brahmbhatt
 // Modified by: Simon Trigona
@@ -106,7 +105,7 @@ namespace RAW_File_Viewer
         #region Source and Destination Component Methods
 
         // Creates Source Component (Output Collection)
-        internal void CreateSourceComponent(string strRAWFilePath)
+        internal void CreateSourceComponent()
         {
             // Creates mainpipe for the executable component
             _objMainPipe = ((TaskHost)_objPackage.Executables.Add(_strDataFlowTaskMoniker)).InnerObject as MainPipe;

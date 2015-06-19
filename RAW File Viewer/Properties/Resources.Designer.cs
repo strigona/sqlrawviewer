@@ -59,5 +59,21 @@ namespace RAW_File_Viewer.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap SQL_logo {
+            get {
+                object obj = ResourceManager.GetObject("SQL_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SSIS 2008 - 2008 R2.
+        /// </summary>
+        internal static string supportedVersion {
+            get {
+                return ResourceManager.GetString("supportedVersion", resourceCulture);
+            }
+        }
     }
 }

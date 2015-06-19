@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.SqlServer.Dts.DtsClient;
+using System.Diagnostics;
 
 
 namespace RAW_File_Viewer
@@ -15,7 +16,9 @@ namespace RAW_File_Viewer
     public partial class frmMain : Form
     {
         internal enum SearchType { Columns, Rows, Column, Row };
-
+        #region Constants
+        private const String BUG_URL = "https://rawviewer.codeplex.com/WorkItem/Create";
+        #endregion
         clsDataFlow _objDataFlow = new clsDataFlow();
         internal string _strWindowTitle;
         bool _bFileOpen = false;
@@ -42,7 +45,7 @@ namespace RAW_File_Viewer
             {
                 if (this._bFileOpen)
                 {
-                    SearchText(toolStripTextFind.Text, (SearchType)Enum.Parse(typeof(SearchType), toolStripComboSearchBy.SelectedItem.ToString()));
+                    toolStripTextFind.Focus();
                 }
                 return true;
             }
@@ -93,6 +96,18 @@ namespace RAW_File_Viewer
             CloseFile();
         }
 
+        private void menuItemReportBug_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo sInfo = new ProcessStartInfo(BUG_URL);
+            Process.Start(sInfo);
+        }
+
+        private void menuItemAbout_Click(object sender, EventArgs e)
+        {
+            // Open About Dialog
+            new AboutBox().Show();
+        }
+
         private void toolStripTextFind_CheckEnter(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             if (e.KeyChar == (char) Keys.Enter)
@@ -111,6 +126,11 @@ namespace RAW_File_Viewer
         #region Search
         internal bool SearchText(string strSearchText, SearchType searchType)
         {
+            if (strSearchText.Equals(""))
+            {
+                return false;
+            }
+
             DataGridViewCell currentCell;
             if (strSearchText.Equals(_strPreviousSearch))
             {
@@ -279,7 +299,7 @@ namespace RAW_File_Viewer
                 // Creates Package for DataFlow
                 _objDataFlow.CreatePackage();
                 // Creates Source Component - DataFlow
-                _objDataFlow.CreateSourceComponent(_objDataFlow.strRAWFileName);
+                _objDataFlow.CreateSourceComponent();
 
                 // Creates Destination Component - DataFlow
                 _objDataFlow.CreateDestinationReaderComponent();
@@ -292,6 +312,7 @@ namespace RAW_File_Viewer
                 }
                 DataTable dtable = dsGridView.Tables[0];
 
+                dgvMain.DefaultCellStyle.NullValue = "<Null>";
                 dgvMain.Enabled = true;
                 dgvMain.DataSource = dsGridView;
                 dgvMain.DataMember = dtable.TableName;
