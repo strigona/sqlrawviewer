@@ -36,6 +36,10 @@
             this.menuItemClose = new System.Windows.Forms.MenuItem();
             this.menuItemSeparator = new System.Windows.Forms.MenuItem();
             this.menuItemExit = new System.Windows.Forms.MenuItem();
+            this.menuItemHelpMenu = new System.Windows.Forms.MenuItem();
+            this.menuItemReportBug = new System.Windows.Forms.MenuItem();
+            this.menuItemHelpSeparator = new System.Windows.Forms.MenuItem();
+            this.menuItemAbout = new System.Windows.Forms.MenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonOpen = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -55,7 +59,8 @@
             // mainMenu
             // 
             this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItemFileMenu});
+            this.menuItemFileMenu,
+            this.menuItemHelpMenu});
             // 
             // menuItemFileMenu
             // 
@@ -91,6 +96,32 @@
             this.menuItemExit.Index = 3;
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
+            // 
+            // menuItemHelpMenu
+            // 
+            this.menuItemHelpMenu.Index = 1;
+            this.menuItemHelpMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemReportBug,
+            this.menuItemHelpSeparator,
+            this.menuItemAbout});
+            this.menuItemHelpMenu.Text = "&Help";
+            // 
+            // menuItemReportBug
+            // 
+            this.menuItemReportBug.Index = 0;
+            this.menuItemReportBug.Text = "Report a bug";
+            this.menuItemReportBug.Click += new System.EventHandler(this.menuItemReportBug_Click);
+            // 
+            // menuItemHelpSeparator
+            // 
+            this.menuItemHelpSeparator.Index = 1;
+            this.menuItemHelpSeparator.Text = "-";
+            // 
+            // menuItemAbout
+            // 
+            this.menuItemAbout.Index = 2;
+            this.menuItemAbout.Text = "About";
+            this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
             // toolStrip
             // 
@@ -227,6 +258,10 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelFileStatus;
+        private System.Windows.Forms.MenuItem menuItemHelpMenu;
+        private System.Windows.Forms.MenuItem menuItemReportBug;
+        private System.Windows.Forms.MenuItem menuItemHelpSeparator;
+        private System.Windows.Forms.MenuItem menuItemAbout;
     }
 }
 

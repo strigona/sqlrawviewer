@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RAW File Viewer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SSIS RAW File Viewer")]
+[assembly: AssemblyDescription("This program is designed to open SSIS RAW files. For more information, head to the project website: http://rawviewer.codeplex.com")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RAW File Viewer")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyProduct("SSIS RAW File Viewer")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
